@@ -3,6 +3,7 @@ import { hashPassword, comparePassword } from '../helpers/passwordHelpers';
 import { signAccessToken } from '../helpers/tokenhelper';
 import ApiError from '../utils/apiError';
 
+// register service 
 export const registerUser = async (payload: any) => {
   const existing = await findUserByEmail(payload.email);
   if (existing) {
@@ -24,18 +25,20 @@ export const registerUser = async (payload: any) => {
   return { user: { id: user.id, firstName: user.firstName, email: user.email }, token };
 };
 
+
+// login service 
 export const loginUser = async (payload: any) => {
   const user = await findUserByEmail(payload.email);
   if (!user) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'Email is not exist , Please Register first.');
   }
 
   const isValid = await comparePassword(payload.password, user.password);
   if (!isValid) {
-    throw new ApiError(401, 'Invalid credentials');
+    throw new ApiError(401, 'Incorect Password, Try again !');
   }
 
   const token = signAccessToken({ id: user.id, email: user.email, role: user.role });
 
-  return { user: { id: user.id, firstName: user.firstName, email: user.email }, token };
+  return { user: { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email }, token };
 };

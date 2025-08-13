@@ -4,7 +4,8 @@ import { validationMiddleware } from '../middlewares/validationMiddleware';
 import { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema } from '../validations/authValidation';
 
 const router = Router();
-
+ 
+// auth routes 
 router.post('/register', validationMiddleware(registerSchema), register);
 router.post('/login', validationMiddleware(loginSchema), login);
 router.post('/refresh-token', refreshToken);

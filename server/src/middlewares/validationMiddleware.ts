@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema } from 'joi';
 import ApiError from '../utils/apiError';
 
+
 export const validationMiddleware = (schema: ObjectSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error, value } = schema.validate( 
@@ -15,8 +16,6 @@ export const validationMiddleware = (schema: ObjectSchema) => {
       return next(new ApiError(400, 'Validation error', { details }));
     }
 
-    // Attach validated data if needed
-    // req.validated = value; // If you extend Request type
     next();
   };
 };

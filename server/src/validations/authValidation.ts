@@ -1,5 +1,6 @@
 import Joi from 'joi';
 
+
 // Registration schema
 export const registerSchema = Joi.object({
   body: Joi.object({
@@ -12,6 +13,7 @@ export const registerSchema = Joi.object({
   query: Joi.object({}),  // if you expect query params, define here or allow empty
   params: Joi.object({})  // if you expect route params, define here or allow empty
 });
+
 
 // Login schema
 export const loginSchema = Joi.object({
@@ -28,6 +30,7 @@ export const loginSchema = Joi.object({
 export const forgotPasswordSchema = Joi.object({
   email: Joi.string().email().required()
 });
+
 
 // Reset password
 export const resetPasswordSchema = Joi.object({
