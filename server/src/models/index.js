@@ -10,14 +10,15 @@ const config = require('../utils/sequelizeConfig.js')[env];
 const db = {};
 let sequelize;
 
+// create sequelize instance
 if (config.url) {
   sequelize = new Sequelize(config.url, config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdirSync(__dirname)
+// Auto-load all models 
+fs.readdirSync(__dirname)
   .filter(file => {
     return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
   })
@@ -26,7 +27,7 @@ fs
     db[model.name] = model;
   });
 
-// If associations exist, call them
+// Run model associations if defined
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

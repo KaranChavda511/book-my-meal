@@ -1,57 +1,63 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue: Sequelize.fn('gen_random_uuid') 
+        defaultValue: Sequelize.fn("gen_random_uuid"),
       },
       firstName: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       role: {
-        type: Sequelize.STRING,
-        defaultValue: 'user'
+        type: Sequelize.ENUM("user", "admin", "rider", "restaurant_admin"), 
+        allowNull: false,
+        defaultValue: "user",
       },
       isEmailVerified: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
-      }
+        defaultValue: Sequelize.fn("NOW"),
+      },
     });
-    // add indexes if needed
-    await queryInterface.addIndex('Users', ['email']);
+
+    // Add index on email for faster lookups
+    await queryInterface.addIndex("Users", ["email"]);
   },
 
-  down: async (queryInterface /* , Sequelize */) => {
-    await queryInterface.dropTable('Users');
-  }
+  down: async (queryInterface) => {
+    // when rolling back
+    await queryInterface.dropTable("Users"); // rollback to drop the table
+    await queryInterface.sequelize.query(
+      'DROP TYPE IF EXISTS "enum_Users_role";'
+    ); // rollback from ENUM type to normal as previous
+  },
 };

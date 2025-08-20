@@ -28,6 +28,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
       return next(new ApiError(401, 'Invalid or expired token'));
     }
 
+    // if payload then it must contain id
     if (!payload?.id) {
       return next(new ApiError(401, 'Invalid token payload'));
     }
