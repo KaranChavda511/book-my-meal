@@ -2,6 +2,11 @@
 import { Response } from 'express';
 
 
+export const successResponse = (res: any, data: any, message = 'Success') => {
+  return res.json({ status: 'success', message, data });
+};
+
+
 type ApiResponseData<T = any> = T | null;
 type ApiErrorData = any[] | string | null;
 

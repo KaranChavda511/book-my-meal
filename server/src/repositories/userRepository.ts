@@ -15,3 +15,33 @@ export const findUserByEmail = async (email: string) => {
 export const findUserById = async (id: string) => {
   return User.findByPk(id);
 };
+
+// update user
+export const updateUser = async (id: string, updates: any) => {
+  const user = await findUserById(id);
+  if (!user) return null;
+  await user.update(updates);
+  // remove password from returned object
+  const JSONUser = user.toJSON();
+  delete JSONUser.password;
+  return JSONUser;
+};
+
+// delete user 
+export const deleteUser = async (id: string) => {
+  const user = await findUserById(id);
+  if (!user) return null;
+  return user.destroy();
+};
+
+// update user password
+export const updateUserPassword = async (id: string, passwordHash: string) => {
+  const user = await findUserById(id);
+  if (!user) return null;
+  await user.update({ password: passwordHash });
+  const JSONUser = user.toJSON();
+  delete JSONUser.password;
+  return JSONUser;
+};
+
+

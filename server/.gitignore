@@ -1,0 +1,45 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.cache/
+.next/
+out/
+tmp/
+temp/
+
+# Environment files
+.env
+.env.*  
+!env.example
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Coverage reports
+coverage/
+
+# Database
+*.sqlite
+*.sqlite-journal
+
+# IDE/Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml

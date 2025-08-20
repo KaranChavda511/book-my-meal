@@ -4,7 +4,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define associations here if needed
+      // User has many sessions
+      if (models.Session) {
+        User.hasMany(models.Session, { foreignKey: 'userId', as: 'sessions' });
+      }
     }
   }
 
